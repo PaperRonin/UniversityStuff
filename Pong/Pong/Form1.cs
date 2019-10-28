@@ -6,7 +6,7 @@ namespace Pong
     public partial class GameForm : Form
     {
         public static Panel GameBoard;
-        tPoint game;
+        TPoint game;
         public GameForm()
         {
             InitializeComponent(); 
@@ -15,7 +15,8 @@ namespace Pong
         private void GameForm_Load(object sender, EventArgs e)
         {
             GameBoard = GamingPanel;
-            game = new tPoint();
+            game = new TPoint();
+            game.StartGame();
         }
     }
 }

@@ -5,34 +5,33 @@ using System.Windows.Forms;
 
 namespace Pong
 {
-    class tPoint
+    class TPoint
     {
         static Timer moveDelay;
-        static Timer rotateDelay;
-        static Ball s;
+        static Ball ball;
         static Random random;
         const int _size = 40;
 
 
-        static tPoint()
+        static TPoint()
         {
             random = new Random();
+            Point location = new Point(random.Next(10, GameForm.GameBoard.Width - _size), random.Next(10, GameForm.GameBoard.Height - _size));
+            Point vector = new Point(random.Next(-5, 5), random.Next(-5, 5));
+            ball = new Ball(location, vector, GameForm.GameBoard);
+        }
+
+        public void StartGame()
+        {
             moveDelay = new Timer();
             moveDelay.Tick += new EventHandler(MoveOnTick);
             moveDelay.Interval = 10;
             moveDelay.Start();
         }
 
-        public void StartGame()
-        {
-            Point location = new Point(random.Next(10, GameForm.GameBoard.Width - _size), random.Next(10, GameForm.GameBoard.Height - _size));
-            Point vector = new Point(random.Next(-5, 5), random.Next(-5, 5));
-            Ball s = new Ball(location, vector, GameForm.GameBoard);
-        }
-
         private static void MoveOnTick(Object myObject, EventArgs myEventArgs)
         {
-                s.Move();
+                ball.Move();
         }
 
     }

@@ -16,21 +16,21 @@ namespace Pong
         }
         protected static void CheckLoc(PictureBox pb, ref Point direction, Panel GameBoard)
         {
-            if (pb.Location.X + pb.Width > GameBoard.Width + 5)
+            if (pb.Location.X + pb.Width > GameBoard.Width + 5)//left side
             {
-                direction.X = -_speed; //* random.Next(3, 8);
+                direction.X = -_speed; 
             }
-            else if (pb.Location.X + direction.X < -5)
+            else if (pb.Location.X + direction.X < -5)//right side
             {
-                direction.X = _speed;// random.Next(3, 8);
+                direction.X = _speed;
             }
-            if (pb.Location.Y + pb.Height > GameBoard.Height + 5)
+            if (pb.Location.Y + pb.Height > GameBoard.Height + 5)//bottom
             {
-                direction.Y = -_speed; //* random.Next(3, 8);
+                direction.Y = -_speed;
             }
-            else if (pb.Location.Y + direction.Y < -8)
+            else if (pb.Location.Y + direction.Y < -8)//top
             {
-                direction.Y = _speed; //random.Next(3, 8);
+                direction.Y = _speed;
             }
         }
     }

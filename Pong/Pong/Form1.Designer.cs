@@ -33,7 +33,7 @@
             // 
             // GamingPanel
             // 
-            this.GamingPanel.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.GamingPanel.BackColor = System.Drawing.SystemColors.Desktop;
             this.GamingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GamingPanel.Location = new System.Drawing.Point(0, 0);
             this.GamingPanel.Name = "GamingPanel";
@@ -44,7 +44,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.GamingPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

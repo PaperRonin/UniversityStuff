@@ -16,8 +16,8 @@ namespace Pong
         static TPoint()
         {
             random = new Random();
-            Point location = new Point(random.Next(10, GameForm.GameBoard.Width - _size), random.Next(10, GameForm.GameBoard.Height - _size));
-            Point vector = new Point(random.Next(-5, 5), random.Next(-5, 5));
+            Point location = new Point((GameForm.GameBoard.Width - _size) / 2, (GameForm.GameBoard.Height - _size) / 2);
+            Point vector = new Point(1, 1);
             ball = new Ball(location, vector, GameForm.GameBoard);
         }
 
@@ -31,8 +31,11 @@ namespace Pong
 
         private static void MoveOnTick(Object myObject, EventArgs myEventArgs)
         {
-                ball.Move();
+            ball.Move();
         }
-
+        public static void Win(int player)
+        {
+            moveDelay.Stop();
+        }
     }
 }

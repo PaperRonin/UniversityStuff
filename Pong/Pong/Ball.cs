@@ -8,16 +8,30 @@ namespace Pong
         private int imageCount = 0;
         private PictureBox pb;
         private Point direction;
-        public override void RotateImage() => RotateImage(ref imageCount, ref pb, "Square");
-        public override void Move() => Move(ref pb, ref direction);
-
-        private static void RotateImage(ref int imageCount, ref PictureBox pb, string classToString)
+        public override void Move()
         {
-            imageCount = imageCount == 0 ? 1 : 0;
-            pb.Image = Image.FromFile("C:/Users/AnotherMan/source/repos/LAB3/" + imageCount + classToString + ".png");
+            switch (CheckLoc(pb, direction, GameForm.GameBoard))
+            {
+                case "left":
+                    TPoint.Win(2);
+                    break;
+
+                case "right":
+                    TPoint.Win(1);
+                    break;
+
+                case "top":
+                case "bot":
+                    direction.Y *= -1;
+                    Move(pb, direction);
+                    break;
+                default:
+                    Move(pb, direction);
+                    break;
+            }
         }
 
-        public Ball(Point location,Point vector, Panel GameBoard)
+        public Ball(Point location, Point vector, Panel GameBoard)
         {
             pb = new PictureBox();
             pb.Image = Image.FromFile("C:/Users/AnotherMan/source/repos/LAB3/0Square.png");

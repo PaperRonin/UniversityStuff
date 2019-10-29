@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -19,15 +18,17 @@ namespace Pong
             Point location = new Point((GameForm.GameBoard.Width - _size) / 2, (GameForm.GameBoard.Height - _size) / 2);
             Point vector = new Point(1, 1);
             ball = new Ball(location, vector, GameForm.GameBoard);
+
+            moveDelay = new Timer();
+            moveDelay.Tick += new EventHandler(MoveOnTick);
+            moveDelay.Interval = 10;
         }
 
         public void StartGame()
         {
-            moveDelay = new Timer();
-            moveDelay.Tick += new EventHandler(MoveOnTick);
-            moveDelay.Interval = 10;
             moveDelay.Start();
         }
+
 
         private static void MoveOnTick(Object myObject, EventArgs myEventArgs)
         {

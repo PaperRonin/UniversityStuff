@@ -28,26 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.GamingPanel = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.gamingPanel = new System.Windows.Forms.Panel();
             this.timerButton = new System.Windows.Forms.Button();
-            this.GamingPanel.SuspendLayout();
+            this.button1 = new System.Windows.Forms.Button();
+            this.gamingPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // GamingPanel
+            // gamingPanel
             // 
-            this.GamingPanel.BackColor = System.Drawing.SystemColors.Desktop;
-            this.GamingPanel.Controls.Add(this.timerButton);
-            this.GamingPanel.Controls.Add(this.button1);
-            this.GamingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GamingPanel.Location = new System.Drawing.Point(0, 0);
-            this.GamingPanel.Name = "GamingPanel";
-            this.GamingPanel.Size = new System.Drawing.Size(800, 450);
-            this.GamingPanel.TabIndex = 0;
+            this.gamingPanel.BackColor = System.Drawing.SystemColors.Desktop;
+            this.gamingPanel.Controls.Add(this.timerButton);
+            this.gamingPanel.Controls.Add(this.button1);
+            this.gamingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gamingPanel.Location = new System.Drawing.Point(0, 0);
+            this.gamingPanel.Name = "gamingPanel";
+            this.gamingPanel.Size = new System.Drawing.Size(800, 450);
+            this.gamingPanel.TabIndex = 0;
+            // 
+            // timerButton
+            // 
+            this.timerButton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.timerButton.FlatAppearance.BorderSize = 0;
+            this.timerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.timerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.timerButton.ForeColor = System.Drawing.SystemColors.AppWorkspace;
+            this.timerButton.Location = new System.Drawing.Point(308, 12);
+            this.timerButton.Name = "timerButton";
+            this.timerButton.Size = new System.Drawing.Size(200, 126);
+            this.timerButton.TabIndex = 2;
+            this.timerButton.TabStop = false;
+            this.timerButton.Text = "0 : 0\r\n3";
+            this.timerButton.UseVisualStyleBackColor = false;
+            this.timerButton.Visible = false;
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.BackColor = System.Drawing.SystemColors.WindowText;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -61,42 +77,26 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // timerButton
-            // 
-            this.timerButton.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.timerButton.Enabled = false;
-            this.timerButton.FlatAppearance.BorderSize = 0;
-            this.timerButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.timerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.timerButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.timerButton.Location = new System.Drawing.Point(308, 12);
-            this.timerButton.Name = "timerButton";
-            this.timerButton.Size = new System.Drawing.Size(200, 101);
-            this.timerButton.TabIndex = 2;
-            this.timerButton.TabStop = false;
-            this.timerButton.Text = "3";
-            this.timerButton.UseVisualStyleBackColor = false;
-            this.timerButton.Visible = false;
-            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.GamingPanel);
+            this.Controls.Add(this.gamingPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GameForm";
             this.Text = "Pong";
             this.Load += new System.EventHandler(this.GameForm_Load);
-            this.GamingPanel.ResumeLayout(false);
+            this.gamingPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.KeyDown += GameForm_KeyDown;
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel GamingPanel;
+        private System.Windows.Forms.Panel gamingPanel;
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.Button timerButton;
     }

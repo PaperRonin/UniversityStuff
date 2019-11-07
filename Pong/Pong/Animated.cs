@@ -13,6 +13,22 @@ namespace Pong
         }
         protected static string CheckCollision(PictureBox pb, Point direction)
         {
+            if (pb.Location.X + direction.X < 40)//left plank hit
+            {
+                if (pb.Location.Y + pb.Height > GameHandler.p1.pb.Location.Y &&
+                    pb.Location.Y < GameHandler.p1.pb.Location.Y + GameHandler.p1.pb.Height)
+                {
+                    return "plank";
+                }
+            }
+            if (pb.Location.X + pb.Width + direction.X > GameForm.gB.Width - 40) //right plank hit
+            {
+                if (pb.Location.Y + pb.Height > GameHandler.p2.pb.Location.Y &&
+                    pb.Location.Y < GameHandler.p2.pb.Location.Y + GameHandler.p2.pb.Height)
+                {
+                    return "plank";
+                }
+            }
             if (pb.Location.Y + pb.Height + direction.Y > GameForm.gB.Height)//bottom hit
             {
                 return "bot";
@@ -28,22 +44,6 @@ namespace Pong
             else if (pb.Location.X + direction.X < 30)//right side hit
             {
                 return "right";
-            }
-            if (pb.Location.X + direction.X < 40)//left plank hit
-            {
-                if (pb.Location.Y + pb.Height > GameHandler.p1.pb.Location.Y &&
-                    pb.Location.Y < GameHandler.p1.pb.Location.Y + GameHandler.p1.pb.Height)
-                {
-                    return "plank";
-                }
-            }
-            if (pb.Location.X + pb.Width + direction.X > GameForm.gB.Width - 40) //right plank hit
-            {
-                if (pb.Location.Y + pb.Height > GameHandler.p2.pb.Location.Y && 
-                    pb.Location.Y < GameHandler.p2.pb.Location.Y + GameHandler.p2.pb.Height)
-                {
-                    return "plank";
-                }
             }
             return "clear";
         }

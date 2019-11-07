@@ -29,7 +29,7 @@ namespace Pong
 
             moveDelay = new Timer();
             moveDelay.Tick += new EventHandler(MoveOnTick);
-            moveDelay.Interval = 10;
+            moveDelay.Interval = 20;
 
 
             matchDelay = new Timer();

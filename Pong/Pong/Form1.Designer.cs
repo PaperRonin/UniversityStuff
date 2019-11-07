@@ -90,7 +90,7 @@
             this.Load += new System.EventHandler(this.GameForm_Load);
             this.gamingPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.KeyDown += GameForm_KeyDown;
+            //this.KeyDown += GameForm_KeyDown;
 
         }
 

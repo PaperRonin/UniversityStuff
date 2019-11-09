@@ -6,8 +6,6 @@ namespace Pong
 {
     public class KeyHandler
     {
-        //windows message id for hotkey
-        public const int WM_HOTKEY_MSG_ID = 0x0312;
 
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);

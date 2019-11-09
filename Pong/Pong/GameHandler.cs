@@ -6,30 +6,31 @@ namespace Pong
 {
     class GameHandler
     {
-        static Timer moveDelay, matchDelay;
-        public static playerControls p1, p2;
-        static int p1Score = 0;
-        static int p2Score = 0;
-        static Ball ball;
-        static Point location, vector;
-        static Random random = new Random();
-        static int tCounter = 3;
-        const int _size = 30;
+        private static Timer moveDelay, matchDelay;
+        private static int p1Score = 0;
+        private static int p2Score = 0;
+        private static Ball ball;
+        private static Point location, vector;
+        private static Random random = new Random();
+        private static int tCounter = 3;
 
 
         static GameHandler()
         {
-            location = new Point(_size * 3, random.Next(_size, GameForm.gB.Height) - _size);
+            location = new Point(GlobalVariables.ballSize * 3, random.Next(GlobalVariables.ballSize, GlobalVariables.gB.Height) - GlobalVariables.ballSize);
             vector = new Point(random.Next(3, 6), random.Next(0, 5));
-            ball = new Ball(GameForm.gB);
+            ball = new Ball(GlobalVariables.gB);
             ball.Hide();
 
-            p1 = new playerControls(GameForm.gB, new Point(1, GameForm.gB.Height / 4));
-            p2 = new playerControls(GameForm.gB, new Point(GameForm.gB.Width - 41, GameForm.gB.Height / 4));
+            GlobalVariables.p1 = new playerControls(GlobalVariables.gB, new Point(1, GlobalVariables.gB.Height / 4));
+            GlobalVariables.p2 = new playerControls(GlobalVariables.gB, new Point(GlobalVariables.gB.Width - 41,
+                GlobalVariables.gB.Height / 4));
+            GlobalVariables.p1.Hide();
+            GlobalVariables.p2.Hide();
 
             moveDelay = new Timer();
             moveDelay.Tick += new EventHandler(MoveOnTick);
-            moveDelay.Interval = 20;
+            moveDelay.Interval = 30;
 
 
             matchDelay = new Timer();
@@ -41,9 +42,10 @@ namespace Pong
         {
             try
             {
-                GameForm.tB.Text = p1Score + " : " + p2Score + "\n" + tCounter;
-                GameForm.tB.Visible = true;
-                location = new Point(_size * 3, random.Next(_size, GameForm.gB.Height) - _size);
+                GlobalVariables.tB.Text = p1Score + " : " + p2Score + "\n" + tCounter;
+                GlobalVariables.tB.Visible = true;
+                location = new Point(GlobalVariables.ballSize * 3,
+                    random.Next(GlobalVariables.ballSize * 2, GlobalVariables.gB.Height) - GlobalVariables.ballSize * 2);
                 vector = new Point(random.Next(3, 6), random.Next(0, 5));
                 matchDelay.Start();
             }
@@ -56,24 +58,46 @@ namespace Pong
         private static void ShowTimer(Object myObject, EventArgs myEventArgs)
         {
             --tCounter;
-            GameForm.tB.Text = p1Score + " : " + p2Score + "\n" + tCounter;
+            GlobalVariables.tB.Text = p1Score + " : " + p2Score + "\n" + tCounter;
             if (tCounter == 0)
             {
                 tCounter = 3;
                 matchDelay.Stop();
                 ball.SetPosition(location, vector);
                 moveDelay.Start();
-                GameForm.tB.Visible = false;
+                GlobalVariables.tB.Visible = false;
+                GlobalVariables.p1.SetPosition(new Point(0, 200));
+                GlobalVariables.p2.SetPosition(new Point(GlobalVariables.gB.Width - 30, 200));
             }
         }
 
         private static void MoveOnTick(Object myObject, EventArgs myEventArgs)
         {
-            GameForm.gF.Focus();
+            if (GlobalVariables.wIsPressed)
+            {
+                GlobalVariables.wIsPressed = false;
+                GlobalVariables.p1.PMove(new System.Drawing.Point(0, -GlobalVariables.ballSize * 2));
+            }
+            if (GlobalVariables.sIsPressed)
+            {
+                GlobalVariables.sIsPressed = false;
+                GlobalVariables.p1.PMove(new System.Drawing.Point(0, GlobalVariables.ballSize * 2));
+            }
+            if (GlobalVariables.upIsPressed)
+            {
+                GlobalVariables.upIsPressed = false;
+                GlobalVariables.p2.PMove(new System.Drawing.Point(0, -GlobalVariables.ballSize * 2));
+            }
+            if (GlobalVariables.downIsPressed)
+            {
+                GlobalVariables.downIsPressed = false;
+                GlobalVariables.p2.PMove(new System.Drawing.Point(0, GlobalVariables.ballSize * 2));
+            }
             ball.Move();
         }
         public static void Win(int player)
         {
+            GlobalVariables.speed = 5;
             switch (player)
             {
                 case 1:
@@ -82,13 +106,12 @@ namespace Pong
                 case 2:
                     p2Score++;
                     break;
-                default:
-                    break;
             }
             moveDelay.Stop();
             ball.Hide();
+            GlobalVariables.p1.Hide();
+            GlobalVariables.p2.Hide();
             StartGame();
-            GameForm.gF.Focus();
         }
     }
 }

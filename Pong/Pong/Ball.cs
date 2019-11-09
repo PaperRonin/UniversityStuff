@@ -8,18 +8,18 @@ namespace Pong
     {    
         private PictureBox pb;
         private Point direction;
-        static Random random = new Random();
-        private static int speed = 5;
+        private static Random random = new Random();
+
         public override void Move()
         {
             switch (CheckCollision(pb, direction))
             {
                 case "plank":
-                    speed++;
+                    GlobalVariables.speed++;
                     direction.X /= Math.Abs(direction.X);
-                    direction.X *= -1 * speed;
+                    direction.X *= -1 * GlobalVariables.speed;
                     direction.Y /= direction.Y != 0 ? Math.Abs(direction.Y) : 1;
-                    direction.Y = random.Next(-speed, speed);
+                    direction.Y = random.Next(-GlobalVariables.speed, GlobalVariables.speed);
                     break;
 
                 case "left":
@@ -40,6 +40,11 @@ namespace Pong
                     break;
             }
         }
+        public void SetPosition(Point location, Point vector)
+        {
+            direction = vector;
+            SetPosition(pb, location);
+        }
 
         public Ball(Panel GameBoard)
         {
@@ -50,17 +55,6 @@ namespace Pong
             GameBoard.Controls.Add(pb);
         }
 
-        public void SetPosition(Point location, Point vector)
-        {
-            speed = 5;
-            pb.Visible = true;
-            direction = vector;
-            pb.Location = location;
-        }
-
-        public void Hide()
-        {
-            pb.Visible = false;
-        }
+        public void Hide() => Hide(pb);
     }
 }

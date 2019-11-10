@@ -1,0 +1,7 @@
+C:\Users\AnotherMan\source\repos\Tries\Tries\bin\Debug\Tries.exe.config
+C:\Users\AnotherMan\source\repos\Tries\Tries\bin\Debug\Tries.exe
+C:\Users\AnotherMan\source\repos\Tries\Tries\bin\Debug\Tries.pdb
+C:\Users\AnotherMan\source\repos\Tries\Tries\obj\Debug\Tries.csprojAssemblyReference.cache
+C:\Users\AnotherMan\source\repos\Tries\Tries\obj\Debug\Tries.csproj.CoreCompileInputs.cache
+C:\Users\AnotherMan\source\repos\Tries\Tries\obj\Debug\Tries.exe
+C:\Users\AnotherMan\source\repos\Tries\Tries\obj\Debug\Tries.pdb

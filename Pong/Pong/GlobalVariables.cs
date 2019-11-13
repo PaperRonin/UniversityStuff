@@ -4,7 +4,7 @@ namespace Pong
 {
     static class GlobalVariables
     {
-        public static playerControls p1, p2;
+        public static PlayerControls p1, p2;
         public const int ballSize = 30;
         public static Panel gB;
         public static Button tB;

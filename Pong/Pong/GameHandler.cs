@@ -18,12 +18,12 @@ namespace Pong
         static GameHandler()
         {
             location = new Point(GlobalVariables.ballSize * 3, random.Next(GlobalVariables.ballSize, GlobalVariables.gB.Height) - GlobalVariables.ballSize);
-            vector = new Point(random.Next(3, 6), random.Next(0, 5));
+            vector = new Point(random.Next(4, 6), random.Next(0, 5));
             ball = new Ball(GlobalVariables.gB);
             ball.Hide();
 
-            GlobalVariables.p1 = new playerControls(GlobalVariables.gB, new Point(1, GlobalVariables.gB.Height / 4));
-            GlobalVariables.p2 = new playerControls(GlobalVariables.gB, new Point(GlobalVariables.gB.Width - 41,
+            GlobalVariables.p1 = new PlayerControls(GlobalVariables.gB, new Point(1, GlobalVariables.gB.Height / 4));
+            GlobalVariables.p2 = new PlayerControls(GlobalVariables.gB, new Point(GlobalVariables.gB.Width - 41,
                 GlobalVariables.gB.Height / 4));
             GlobalVariables.p1.Hide();
             GlobalVariables.p2.Hide();

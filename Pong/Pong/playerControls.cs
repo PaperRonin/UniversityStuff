@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace Pong
 {
-    class playerControls : Animated
+    class PlayerControls : Animated
     {
-        public PictureBox pb;
+        private PictureBox pb;
         private Point direction;
-        public playerControls(Panel GameBoard, Point location)
+        public PlayerControls(Panel GameBoard, Point location)
         {
             pb = new PictureBox();
             pb.Image = Properties.Resources.plank;
@@ -20,6 +20,15 @@ namespace Pong
         {
             direction = d;
             Move();
+        }
+
+        public Point GetLocation() {
+            return pb.Location;
+        }
+
+        public Size GetSize()
+        {
+            return pb.Size;
         }
 
         public void SetPosition(Point location) => SetPosition(pb, location);

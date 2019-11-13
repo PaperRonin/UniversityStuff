@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Pong
@@ -37,8 +36,8 @@ namespace Pong
             }
 
             if (pb.Location.X + direction.X < GlobalVariables.ballSize)//left plank hit
-                if (pb.Location.Y + pb.Height > GlobalVariables.p1.pb.Location.Y &&
-                        pb.Location.Y < GlobalVariables.p1.pb.Location.Y + GlobalVariables.p1.pb.Height)
+                if (pb.Location.Y + pb.Height > GlobalVariables.p1.GetLocation().Y &&
+                        pb.Location.Y < GlobalVariables.p1.GetLocation().Y + GlobalVariables.p2.GetSize().Height)
                 {
                     Move(pb, new Point(-pb.Location.X + GlobalVariables.ballSize,
                         direction.Y));
@@ -47,8 +46,8 @@ namespace Pong
 
 
             if (pb.Location.X + pb.Width + direction.X > GlobalVariables.gB.Width - GlobalVariables.ballSize) //right plank hit
-                if (pb.Location.Y + pb.Height > GlobalVariables.p2.pb.Location.Y &&
-                        pb.Location.Y < GlobalVariables.p2.pb.Location.Y + GlobalVariables.p2.pb.Height)
+                if (pb.Location.Y + pb.Height > GlobalVariables.p2.GetLocation().Y &&
+                        pb.Location.Y < GlobalVariables.p2.GetLocation().Y + GlobalVariables.p2.GetSize().Height)
                 {
                     Move(pb, new Point(GlobalVariables.gB.Width - GlobalVariables.ballSize - pb.Location.X - pb.Width,
                         direction.Y));

@@ -55,7 +55,7 @@
     </Compile>
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="KeyHandler.cs" />
-    <Compile Include="playerControls.cs" />
+    <Compile Include="PlayerControls.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ball.cs" />

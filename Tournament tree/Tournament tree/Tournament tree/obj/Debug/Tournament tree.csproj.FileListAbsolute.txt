@@ -1,0 +1,7 @@
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\bin\Debug\Tournament tree.exe.config
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\bin\Debug\Tournament tree.exe
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\bin\Debug\Tournament tree.pdb
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\obj\Debug\Tournament tree.csprojAssemblyReference.cache
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\obj\Debug\Tournament tree.csproj.CoreCompileInputs.cache
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\obj\Debug\Tournament tree.exe
+C:\Users\AnotherMan\source\repos\UniversityStuff\Tournament tree\Tournament tree\Tournament tree\obj\Debug\Tournament tree.pdb

@@ -1,6 +1,9 @@
 #include "commands.h"
 
-void do_command(enum keys k) {
+byte *this_mem;
+
+void do_command(enum keys k,byte *mem) {
+	this_mem = mem;
 	int check = 0;
 	char file_name[50];
 	int sl = 0;
@@ -138,7 +141,7 @@ void do_command(enum keys k) {
 }
 
 void inst_counter() {
-	CU();
+	CU(mem);
     print_term();
 }
 

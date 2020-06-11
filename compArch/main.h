@@ -56,14 +56,13 @@ typedef struct{
 Variables buffer[BUFFER_SIZE];
 int buff_counter;
 
-byte mem;
 
 void print_term();
 void print_big(int a);
 int *get_big(int a);
-void do_command(enum keys k);
+void do_command(enum keys k,byte *mem);
 void inst_counter();
 void _reset();
-int ALU (int command, int operand);
-void CU ();
+int ALU (int command, int operand,byte *mem);
+void CU (byte *mem);
 void buff_clear();

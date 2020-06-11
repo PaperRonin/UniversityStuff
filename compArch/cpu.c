@@ -1,6 +1,6 @@
 #include "main.h"
 
-void CU() {
+void CU(byte *mem) {
 	sc_regSet(FlagV, 0);
 	sc_regSet(FlagO, 0);
 	sc_regSet(FlagM, 0);
@@ -8,7 +8,7 @@ void CU() {
 
 	int tempMemory;
 	int tempVariable;
-	if (sc_memoryGet(&mem, outputFlags.selectedSlot, &tempVariable) == -1) {
+	if (sc_memoryGet(mem, outputFlags.selectedSlot, &tempVariable) == -1) {
 		sc_regSet(FlagT, 1);
 	}
 	int decodedVariable, decodedCommand;
@@ -27,19 +27,19 @@ void CU() {
 				if (tempMemory > 0xffff || tempMemory < -0xffff) {
 					sc_regSet(FlagV, 1);
 					sc_regSet(FlagT, 1);
-				} else if (sc_memorySet(&mem, decodedVariable, tempMemory) == -1)
+				} else if (sc_memorySet(mem, decodedVariable, tempMemory) == -1)
 						sc_regSet(FlagT, 1);
 				else {
 					outputFlags.selectedSlot++;
 				}
 
 				if (value[3] == 0) {
-					rk_mytermrergtime(0, 0, 0, 0, 0);
+					rk_mytermregime(0, 0, 0, 0, 0);
 					setitimer(ITIMER_REAL, &nval, &oval);
 				}
 				break;
 			case WRITE:
-				if (sc_memoryGet(&mem, decodedVariable, &tempMemory) == -1) {
+				if (sc_memoryGet(mem, decodedVariable, &tempMemory) == -1) {
 					sc_regSet(FlagT, 1);
 				}
 				else {
@@ -50,7 +50,7 @@ void CU() {
 				}
 				break;
 			case LOAD:
-				if (sc_memoryGet(&mem, decodedVariable, &tempMemory) == -1) {
+				if (sc_memoryGet(mem, decodedVariable, &tempMemory) == -1) {
 					sc_regSet(FlagT, 1);
 				}
 				else {
@@ -59,7 +59,7 @@ void CU() {
 				}
 				break;
 			case STORE:
-				if (sc_memorySet(&mem, decodedVariable, accumulator) == -1) {
+				if (sc_memorySet(mem, decodedVariable, accumulator) == -1) {
 					sc_regSet(FlagT, 1);
 				}
 				else {
@@ -109,12 +109,12 @@ void CU() {
 		}
 }
 
-int ALU(int command, int operand) {
+int ALU(int command, int operand,byte *mem) {
 	int tempMemory;
 	int tmp1;
 	switch (command) {
 		case ADD:
-			if (sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+			if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
 				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
@@ -122,7 +122,7 @@ int ALU(int command, int operand) {
 			}
 			break;
 		case SUBB:
-			if (sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+			if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
 				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
@@ -130,7 +130,7 @@ int ALU(int command, int operand) {
 			}
 			break;
 		case DIVIDE:
-			if(sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+			if(sc_memoryGet(mem, operand, &tempMemory) == -1) {
 				sc_regSet(FlagT, 1);
 				return -1;
 			} else if (tempMemory == 0) {
@@ -142,7 +142,7 @@ int ALU(int command, int operand) {
 			}
 			break;
 		case MUL:
-			if (sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+			if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
 				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
@@ -150,7 +150,7 @@ int ALU(int command, int operand) {
 			}
 			break;
 		case SUBC:
-			if (sc_memoryGet(&mem, operand, &tempMemory) == -1 || sc_memoryGet(&mem, accumulator, &tmp1) == -1) {
+			if (sc_memoryGet(mem, operand, &tempMemory) == -1 || sc_memoryGet(mem, accumulator, &tmp1) == -1) {
 				sc_regSet(FlagT, 1);
 				return -1;
 			}

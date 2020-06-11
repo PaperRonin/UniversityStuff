@@ -16,8 +16,6 @@ struct OFlags outputFlags;
 
 ///////////////////////
 
-byte mem;
-
 #include "BigChars.h"
 #include "myReadkey.h"
 #include "mySimpleComputer.h"
@@ -57,6 +55,8 @@ typedef struct{
 
 Variables buffer[BUFFER_SIZE];
 int buff_counter;
+
+byte mem;
 
 void print_term();
 void print_big(int a);

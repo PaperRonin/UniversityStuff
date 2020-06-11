@@ -8,12 +8,12 @@ void CU() {
 
 	int tempMemory;
 	int tempVariable;
-	if (sc_memoryGet(mem, OFlags.selectedSlot, &tempVariable) == -1) {
-		sc_regSet(Flag.T, 1);
+	if (sc_memoryGet(&mem, outputFlags.selectedSlot, &tempVariable) == -1) {
+		sc_regSet(FlagT, 1);
 	}
 	int decodedVariable, decodedCommand;
 	if (sc_commandDecode(tempVariable, &decodedCommand, &decodedVariable) == -1)
-		sc_regSet(Flag.T, 1);
+		sc_regSet(FlagT, 1);
 	else
 		switch (decodedCommand) {
 			case READ:
@@ -26,11 +26,11 @@ void CU() {
 				buff_counter++;
 				if (tempMemory > 0xffff || tempMemory < -0xffff) {
 					sc_regSet(FlagV, 1);
-					sc_regSet(Flag.T, 1);
-				} else if (sc_memorySet(mem, decodedVariable, tempMemory) == -1)
-						sc_regSet(Flag.T, 1);
+					sc_regSet(FlagT, 1);
+				} else if (sc_memorySet(&mem, decodedVariable, tempMemory) == -1)
+						sc_regSet(FlagT, 1);
 				else {
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				}
 
 				if (value[3] == 0) {
@@ -39,71 +39,71 @@ void CU() {
 				}
 				break;
 			case WRITE:
-				if (sc_memoryGet(mem, decodedVariable, &tempMemory) == -1) {
-					sc_regSet(Flag.T, 1);
+				if (sc_memoryGet(&mem, decodedVariable, &tempMemory) == -1) {
+					sc_regSet(FlagT, 1);
 				}
 				else {
 					buffer[buff_counter].value = tempMemory;
 					buffer[buff_counter].in_out = -1;
 					buff_counter++;
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				}
 				break;
 			case LOAD:
-				if (sc_memoryGet(mem, decodedVariable, &tempMemory) == -1) {
-					sc_regSet(Flag.T, 1);
+				if (sc_memoryGet(&mem, decodedVariable, &tempMemory) == -1) {
+					sc_regSet(FlagT, 1);
 				}
 				else {
 					accumulator = tempMemory;
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				}
 				break;
 			case STORE:
-				if (sc_memorySet(mem, decodedVariable, accumulator) == -1) {
-					sc_regSet(Flag.T, 1);
+				if (sc_memorySet(&mem, decodedVariable, accumulator) == -1) {
+					sc_regSet(FlagT, 1);
 				}
 				else {
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				}
 				break;
 			case JUMP:
-				if (decodedVariable >= SIZE || decodedVariable < 0) {
+				if (decodedVariable >= MaxMemory || decodedVariable < 1) {
 					sc_regSet(FlagM, 1);
-					sc_regSet(Flag.T, 1);
+					sc_regSet(FlagT, 1);
 				} else {
-					OFlags.selectedSlot = decodedVariable;
+					outputFlags.selectedSlot = decodedVariable;
 				}
 				break;
 			case JNEG:
-				if (accumulator < 0) {
-					if (decodedVariable >= SIZE || decodedVariable < 0) {
+				if (accumulator < 1) {
+					if (decodedVariable >= MaxMemory || decodedVariable < 1) {
 						sc_regSet(FlagM, 1);
-						sc_regSet(Flag.T, 1);
+						sc_regSet(FlagT, 1);
 					} else
-						OFlags.selectedSlot = decodedVariable;
+						outputFlags.selectedSlot = decodedVariable;
 				} else
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				break;
 			case JZ:
 				if (accumulator == 0) {
-					if (decodedVariable >= SIZE || decodedVariable < 0) {
+					if (decodedVariable >= MaxMemory || decodedVariable < 1) {
 						sc_regSet(FlagM, 1);
-						sc_regSet(Flag.T, 1);
+						sc_regSet(FlagT, 1);
 					} else {
-						OFlags.selectedSlot = decodedVariable;
+						outputFlags.selectedSlot = decodedVariable;
 					}
 				} else {
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				}
 				break;
 			case HALT:
-				sc_regSet(Flag.T, 1);
+				sc_regSet(FlagT, 1);
 				break;
 			default:
 				if (ALU(decodedCommand, decodedVariable) == -1) {
-					sc_regSet(Flag.T, 1);
+					sc_regSet(FlagT, 1);
 				} else {
-					OFlags.selectedSlot++;
+					outputFlags.selectedSlot++;
 				}
 				break;
 		}
@@ -114,44 +114,44 @@ int ALU(int command, int operand) {
 	int tmp1;
 	switch (command) {
 		case ADD:
-			if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
-				sc_regSet(Flag.T, 1);
+			if (sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
 				accumulator += tempMemory;
 			}
 			break;
 		case SUBB:
-			if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
-				sc_regSet(Flag.T, 1);
+			if (sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
 				accumulator -= tempMemory;
 			}
 			break;
 		case DIVIDE:
-			if(sc_memoryGet(mem, operand, &tempMemory) == -1) {
-				sc_regSet(Flag.T, 1);
+			if(sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+				sc_regSet(FlagT, 1);
 				return -1;
 			} else if (tempMemory == 0) {
 				sc_regSet(FlagO, 1);
-				sc_regSet(Flag.T, 1);
+				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
 				accumulator /= tempMemory;
 			}
 			break;
 		case MUL:
-			if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
-				sc_regSet(Flag.T, 1);
+			if (sc_memoryGet(&mem, operand, &tempMemory) == -1) {
+				sc_regSet(FlagT, 1);
 				return -1;
 			} else {
 				accumulator *= tempMemory;
 			}
 			break;
 		case SUBC:
-			if (sc_memoryGet(mem, operand, &tempMemory) == -1 || sc_memoryGet(mem, accumulator, &tmp1) == -1) {
-				sc_regSet(Flag.T, 1);
+			if (sc_memoryGet(&mem, operand, &tempMemory) == -1 || sc_memoryGet(&mem, accumulator, &tmp1) == -1) {
+				sc_regSet(FlagT, 1);
 				return -1;
 			}
 			accumulator = tempMemory - tmp1;

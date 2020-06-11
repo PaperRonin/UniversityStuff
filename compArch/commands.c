@@ -4,7 +4,7 @@ void do_command(enum keys k) {
 	int check = 0;
 	char file_name[50];
 	int sl = 0;
-	
+
 	switch (k) {
 		case _l:
 			printf("Введите имя файла: ");
@@ -42,12 +42,12 @@ void do_command(enum keys k) {
 
 				while(1) {
 					sc_regGet(IG, &value[3]);
-					if (index >= SIZE - 1 || value[3] == 1) {
+					if (OFlags.selectedSlot >= SIZE - 1 || value[3] == 1) {
 						alarm(0);
 						break;
 					}
 					signal(SIGALRM, inst_counter);
-						
+
 					enum keys _temp;
 					rk_readkey(&_temp);
 					if (_temp == _i) {
@@ -58,7 +58,7 @@ void do_command(enum keys k) {
 					}
 				}
 				tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_default);
-			
+
 			break;
 		case _t:
 			inst_counter();
@@ -75,7 +75,7 @@ void do_command(enum keys k) {
 			if (tmp > 0xFFFF) {
 				tmp = 0xFFFF;
 			}
-			arr[index] = tmp;
+			arr[OFlags.selectedSlot] = tmp;
 			break;
 		case _c:
 			buff_clear();
@@ -98,40 +98,40 @@ void do_command(enum keys k) {
 				printf("Ошибка. Введите новый индекс: ");
 				scanf("%d", &in_c);
 			}
-			index = in_c;
+			OFlags.selectedSlot = in_c;
 			break;
 		case UP:
-			if (index - 10 >= 0)
-				index -= 10;
+			if (OFlags.selectedSlot - 10 >= 0)
+				OFlags.selectedSlot -= 10;
 			else
-				index += 90;
+				OFlags.selectedSlot += 90;
 			break;
 		case DOWN:
-			if (index + 10 < 100)
-				index += 10;
+			if (OFlags.selectedSlot + 10 < 100)
+				OFlags.selectedSlot += 10;
 			else
-				index -= 90;
+				OFlags.selectedSlot -= 90;
 			break;
 		case LEFT:
-			if (index % 10 != 0)
-				index--;
+			if (OFlags.selectedSlot % 10 != 0)
+				OFlags.selectedSlot--;
 			else
-				index += 9;
+				OFlags.selectedSlot += 9;
 			break;
 		case RIGHT:
-			if (index % 10 != 9)
-				index++;
+			if (OFlags.selectedSlot % 10 != 9)
+				OFlags.selectedSlot++;
 			else
-				index -= 9;
+				OFlags.selectedSlot -= 9;
 			break;
 		case ENTER:
 			printf("Команда и операнд: \n");
 			int temp = 0, temp1, temp2;
 			scanf("%2x%2x", &temp1, &temp2);
 			if (sc_commandEncode(temp1, temp2, &temp) == 1) {
-				sc_memorySet(index, temp);
+				sc_memorySet(OFlags.selectedSlot, temp);
 			}
-			
+
 			break;
 	}
 	return;
@@ -145,7 +145,7 @@ void inst_counter() {
 void _reset() {
 	sc_memoryInit();
 	sc_regInit();
-	index = 0;
+	OFlags.selectedSlot = 0;
 	sc_regSet(IG, 1);
 	buff_clear();
 	accumulator = 0;

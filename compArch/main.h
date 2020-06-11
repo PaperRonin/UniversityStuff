@@ -16,16 +16,37 @@ struct OFlags outputFlags;
 
 ///////////////////////
 
-#include "memory.h"
-#include "myBigChars.h"
+byte mem;
+
+
+#include "main.h"
+#include "BigChars.h"
 #include "myReadkey.h"
+#include "mySimpleComputer.h"
+#include "output.h"
+#include "terminal.h"
 #include <math.h>
 #include <signal.h>
 #include <sys/time.h>
 
 #define BUFFER_SIZE 50
 
-int index;
+enum Commands {
+	READ = 0x10,
+	WRITE,
+	LOAD = 0x20,
+	STORE,
+	ADD = 0x30,
+	SUBB,
+	DIVIDE,
+	MUL,
+	JUMP = 0x40,
+	JNEG,
+	JZ,
+	HALT,
+	SUBC = 0x66
+};
+
 int value[5];
 int accumulator;
 struct termios termios_default;

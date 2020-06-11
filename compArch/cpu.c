@@ -1,6 +1,6 @@
 #include "main.h"
 
-enum CFlag.MMANDS {
+enum Commands {
 	READ = 0x10,
 	WRITE,
 	LOAD = 0x20,
@@ -17,18 +17,18 @@ enum CFlag.MMANDS {
 };
 
 void CU() {
-	sc_regSet(Flag.V, 0);
-	sc_regSet(Flag.O, 0);
-	sc_regSet(Flag.M, 0);
-	sc_regSet(Flag.E, 0);
+	sc_regSet(FlagV, 0);
+	sc_regSet(FlagO, 0);
+	sc_regSet(FlagM, 0);
+	sc_regSet(FlagE, 0);
 
 	int tempMemory;
 	int tempVariable;
-	if (sc_memoryGet(mem, index, &tempVariable) == -1) {
+	if (sc_memoryGet(mem, OFlags.selectedSlot, &tempVariable) == -1) {
 		sc_regSet(Flag.T, 1);
 	}
 	int decodedVariable, decodedCommand;
-	if (sc_commandDecode(&decodedCommand, &decodedVariable, tempVariable) == -1)
+	if (sc_commandDecode(tempVariable, &decodedCommand, &decodedVariable) == -1)
 		sc_regSet(Flag.T, 1);
 	else
 		switch (decodedCommand) {
@@ -41,12 +41,12 @@ void CU() {
 				buffer[buff_counter].in_out = 1;
 				buff_counter++;
 				if (tempMemory > 0xffff || tempMemory < -0xffff) {
-					sc_regSet(Flag.V, 1);
+					sc_regSet(FlagV, 1);
 					sc_regSet(Flag.T, 1);
 				} else if (sc_memorySet(mem, decodedVariable, tempMemory) == -1)
 						sc_regSet(Flag.T, 1);
 				else {
-					index++;
+					OFlags.selectedSlot++;
 				}
 
 				if (value[3] == 0) {
@@ -62,7 +62,7 @@ void CU() {
 					buffer[buff_counter].value = tempMemory;
 					buffer[buff_counter].in_out = -1;
 					buff_counter++;
-					index++;
+					OFlags.selectedSlot++;
 				}
 				break;
 			case LOAD:
@@ -71,7 +71,7 @@ void CU() {
 				}
 				else {
 					accumulator = tempMemory;
-					index++;
+					OFlags.selectedSlot++;
 				}
 				break;
 			case STORE:
@@ -79,37 +79,37 @@ void CU() {
 					sc_regSet(Flag.T, 1);
 				}
 				else {
-					index++;
+					OFlags.selectedSlot++;
 				}
 				break;
 			case JUMP:
 				if (decodedVariable >= SIZE || decodedVariable < 0) {
-					sc_regSet(Flag.M, 1);
+					sc_regSet(FlagM, 1);
 					sc_regSet(Flag.T, 1);
 				} else {
-					index = decodedVariable;
+					OFlags.selectedSlot = decodedVariable;
 				}
 				break;
 			case JNEG:
 				if (accumulator < 0) {
 					if (decodedVariable >= SIZE || decodedVariable < 0) {
-						sc_regSet(Flag.M, 1);
+						sc_regSet(FlagM, 1);
 						sc_regSet(Flag.T, 1);
 					} else
-						index = decodedVariable;
+						OFlags.selectedSlot = decodedVariable;
 				} else
-					index++;
+					OFlags.selectedSlot++;
 				break;
 			case JZ:
 				if (accumulator == 0) {
 					if (decodedVariable >= SIZE || decodedVariable < 0) {
-						sc_regSet(Flag.M, 1);
+						sc_regSet(FlagM, 1);
 						sc_regSet(Flag.T, 1);
 					} else {
-						index = decodedVariable;
+						OFlags.selectedSlot = decodedVariable;
 					}
 				} else {
-					index++;
+					OFlags.selectedSlot++;
 				}
 				break;
 			case HALT:
@@ -119,7 +119,7 @@ void CU() {
 				if (ALU(decodedCommand, decodedVariable) == -1) {
 					sc_regSet(Flag.T, 1);
 				} else {
-					index++;
+					OFlags.selectedSlot++;
 				}
 				break;
 		}
@@ -150,7 +150,7 @@ int ALU(int command, int operand) {
 				sc_regSet(Flag.T, 1);
 				return -1;
 			} else if (tempMemory == 0) {
-				sc_regSet(Flag.O, 1);
+				sc_regSet(FlagO, 1);
 				sc_regSet(Flag.T, 1);
 				return -1;
 			} else {

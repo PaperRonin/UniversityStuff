@@ -53,7 +53,7 @@ void print_flags() {
 
     mt_gotoXY(76, 11);
 
-    printf("O E V M");
+    printf("V O M T E");
 }
 
 void print_memory(unsigned short *sc_memory) {

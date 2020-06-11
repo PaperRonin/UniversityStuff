@@ -61,63 +61,66 @@ int sc_memoryLoad(byte *mem, char *filename) {
 }
 
 void sc_regInit() {
-    Flags.C = 0;
-    Flags.E = 0;
-    Flags.P = 0;
     Flags.V = 0;
-    Flags.Z = 0;
+    Flags.O = 0;
+    Flags.M = 0;
+    Flags.T = 0;
+    Flags.E = 0;
 }
 
 int sc_regSet(int reg, int value) {
     if (0 == value || 1 == value)
-        if (FlagV == reg || FlagZ == reg || FlagE == reg || FlagP == reg ||
-            FlagC == reg) {
+        if (FlagV == reg || FlagO == reg || FlagM == reg || FlagT == reg ||
+            FlagE == reg) {
             switch (reg) {
             case FlagV:
                 Flags.V = value;
                 break;
-            case FlagZ:
-                Flags.Z = value;
+            case FlagO:
+                Flags.O = value;
+                break;
+            case FlagM:
+                Flags.M = value;
+                break;
+            case FlagT:
+                Flags.T = value;
                 break;
             case FlagE:
                 Flags.E = value;
-                break;
-            case FlagP:
-                Flags.P = value;
-                break;
-            case FlagC:
-                Flags.C = value;
                 break;
             }
             return 0;
         } else
             return 2;
     else
+    sc_regSet(Flags.E, 1);
+
         return 1;
 }
 
 int sc_regGet(int reg, int *value) {
-    if (FlagV == reg || FlagZ == reg || FlagE == reg || FlagP == reg ||
-        FlagC == reg) {
+    if (FlagV == reg || FlagO == reg || FlagM == reg || FlagT == reg ||
+        FlagE == reg) {
         switch (reg) {
         case FlagV:
             *value = Flags.V;
             break;
-        case FlagZ:
-            *value = Flags.Z;
+        case FlagO:
+            *value = Flags.O;
+            break;
+        case FlagM:
+            *value = Flags.M;
+            break;
+        case FlagT:
+            *value = Flags.T;
             break;
         case FlagE:
             *value = Flags.E;
             break;
-        case FlagP:
-            *value = Flags.P;
-            break;
-        case FlagC:
-            *value = Flags.C;
-            break;
         }
         return 0;
     }
+    sc_regSet(Flags.E, 1);
     return 1;
 }
 
@@ -142,6 +145,7 @@ int sc_commandEncode(int command, int operand, int *value) {
         *value = (command << 7) | operand;
         return 0;
     } else
+    sc_regSet(Flags.E, 1);
         return 1;
 }
 
@@ -160,6 +164,7 @@ int sc_commandDecode(int value, int *command, int *operand) {
             *command = tmp_command;
             *operand = tmp_operand;
         } else
+        sc_regSet(Flags.E, 1);
             return 1;
     } else
         return 2;

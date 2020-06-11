@@ -9,22 +9,19 @@ typedef unsigned short byte;
 #define MaxMemory 101
 
 typedef struct { //Регистр флагов содержит 5 разрядов:
-    unsigned V : 1; //переполнение при выполнении операции
-    unsigned Z : 1; //ошибка деления на 0
-    unsigned E : 1; //ошибка выхода за границы памяти
-    unsigned P : 1; //игнорирование тактовых импульсов
-    unsigned C : 1;  //указана неверная команда
-    unsigned F1 : 1; //ЗАРЕЗЕРВИРОВАНО
-    unsigned F2 : 1; //ЗАРЕЗЕРВИРОВАНО
-    unsigned F3 : 1; //ЗАРЕЗЕРВИРОВАНО
+    unsigned V : 1; //переполнение при выполнении операции UC
+    unsigned O : 1; //ошибка деления на 0 DO
+    unsigned M : 1; //Выход за границы памяти OM
+    unsigned T : 1;  //игнорирование тактовых импульсов IG
+    unsigned E : 1; //указана неверная команда OV
 } tFlags;
 
 enum FlagMask {
     FlagV = 0b00000001,
-    FlagZ = 0b00000010,
-    FlagE = 0b00000100,
-    FlagP = 0b00001000,
-    FlagC = 0b00010000
+    FlagO = 0b00000010,
+    FlagM = 0b00000100,
+    FlagT = 0b00001000,
+    FlagE = 0b00010000
 };
 
 tFlags Flags;

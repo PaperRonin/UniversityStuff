@@ -114,16 +114,12 @@ int main(int argc, char const *argv[]) {
         editor.digits[i] = 0;
     }
 
-    *mem = sc_memoryInit(MaxMemory);
+    byte *mem = sc_memoryInit(MaxMemory);
     outputFlags.selectedSlot = 1;
     outputFlags.regime = selectingSlot;
     draw(mem);
     raise(SIGUSR1);
     raise(SIGINT);
-    int w = 0;
-    sc_commandEncode(0x30, 4, &w);
-    sc_memorySet(mem, 1, w);
-    sc_memorySet(mem, 2, 1223);
     while (1) {
         draw(mem);
         rk_readkey(&outputFlags.key);

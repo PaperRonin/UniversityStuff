@@ -100,7 +100,7 @@ void CU(byte *mem) {
 				sc_regSet(FlagT, 1);
 				break;
 			default:
-				if (ALU(decodedCommand, decodedVariable) == -1) {
+				if (ALU(decodedCommand, decodedVariable,mem) == -1) {
 					sc_regSet(FlagT, 1);
 				} else {
 					outputFlags.selectedSlot++;

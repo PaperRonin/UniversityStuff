@@ -30,7 +30,7 @@ void do_command(enum keys k,byte *mem) {
 			}
 			break;
 		case _r:
-				sc_regSet(IG, 0);
+				sc_regSet(FlagT, 0);
 
 				rk_mytermrergtime(0, 0, 0, 0, 0);
 
@@ -44,7 +44,7 @@ void do_command(enum keys k,byte *mem) {
 				setitimer(ITIMER_REAL, &nval, &oval);
 
 				while(1) {
-					sc_regGet(IG, &value[3]);
+					sc_regGet(FlagT, &value[3]);
 					if (outputFlags.selectedSlot >= MaxMemory - 1 || value[3] == 1) {
 						alarm(0);
 						break;
@@ -149,7 +149,7 @@ void _reset() {
 	sc_memoryInit();
 	sc_regInit();
 	outputFlags.selectedSlot = 0;
-	sc_regSet(IG, 1);
+	sc_regSet(FlagT, 1);
 	buff_clear();
 	accumulator = 0;
 }

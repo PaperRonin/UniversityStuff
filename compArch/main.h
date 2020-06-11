@@ -18,8 +18,6 @@ struct OFlags outputFlags;
 
 byte mem;
 
-
-#include "main.h"
 #include "BigChars.h"
 #include "myReadkey.h"
 #include "mySimpleComputer.h"

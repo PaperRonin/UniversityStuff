@@ -1,21 +1,5 @@
 #include "main.h"
 
-enum Commands {
-	READ = 0x10,
-	WRITE,
-	LOAD = 0x20,
-	STORE,
-	ADD = 0x30,
-	SUBB,
-	DIVIDE,
-	MUL,
-	JUMP = 0x40,
-	JNEG,
-	JZ,
-	HALT,
-	SUBC = 0x66,
-};
-
 void CU() {
 	sc_regSet(FlagV, 0);
 	sc_regSet(FlagO, 0);

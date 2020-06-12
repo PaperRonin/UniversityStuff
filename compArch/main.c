@@ -10,6 +10,28 @@ void sigHandler(int sigN) {
         printf("restart\n"); // FIXME
 }
 
+void inst_counter() {
+	  CU(mem);
+    draw();
+}
+
+void _reset() {
+	sc_memoryInit();
+	sc_regInit();
+	outputFlags.selectedSlot = 0;
+	sc_regSet(FlagT, 1);
+	buff_clear();
+	accumulator = 0;
+}
+
+void buff_clear() {
+	buff_counter = 0;
+	for(int h = 0; h < BUF_SIZE; h++) {
+		buffer[h].in_out = 0;
+		buffer[h].value = 0;
+	}
+}
+
 int handleKey(byte *mem) {
 
   int check = 0;

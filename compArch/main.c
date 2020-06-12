@@ -12,11 +12,11 @@ void sigHandler(int sigN) {
 
 void inst_counter() {
 	  CU(mem);
-    draw();
+    draw(mem);
 }
 
 void _reset() {
-	sc_memoryInit();
+mem = sc_memoryInit(MaxMemory);
 	sc_regInit();
 	outputFlags.selectedSlot = 0;
 	sc_regSet(FlagT, 1);
@@ -26,7 +26,7 @@ void _reset() {
 
 void buff_clear() {
 	buff_counter = 0;
-	for(int h = 0; h < BUF_SIZE; h++) {
+	for(int h = 0; h < BUFFER_SIZE; h++) {
 		buffer[h].in_out = 0;
 		buffer[h].value = 0;
 	}

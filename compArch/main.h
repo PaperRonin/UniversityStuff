@@ -34,7 +34,6 @@ enum Commands {
 	SUBC = 0x66
 };
 
-int value[5];
 int accumulator;
 struct termios termios_default;
 struct itimerval nval, oval;

@@ -133,6 +133,54 @@ int bc_convertandprintbigchar(char digit, int x, int y, enum colors fg,
         break;
     }
 
+    case 'a': {
+        int numb[2] = {0xFFC3C3FF, 0xC3C3C3C3};
+        if (bc_printbigchar(numb, x, y, fg, bg) == -1) {
+            return 1;
+        }
+        break;
+    }
+
+    case 'b': {
+        int numb[2] = {0x3FC3C33F, 0x3FC3C3FF};
+        if (bc_printbigchar(numb, x, y, fg, bg) == -1) {
+            return 1;
+        }
+        break;
+    }
+
+    case 'c': {
+        int numb[2] = {0x30303FF, 0xFF030303};
+        if (bc_printbigchar(numb, x, y, fg, bg) == -1) {
+            return 1;
+        }
+        break;
+    }
+
+    case 'd': {
+        int numb[2] = {0xC3C3C33F, 0x3FC3C3C3};
+        if (bc_printbigchar(numb, x, y, fg, bg) == -1) {
+            return 1;
+        }
+        break;
+    }
+
+    case 'e': {
+        int numb[2] = {0xFF0303FF, 0xFF0303FF};
+        if (bc_printbigchar(numb, x, y, fg, bg) == -1) {
+            return 1;
+        }
+        break;
+    }
+
+    case 'f': {
+        int numb[2] = {0xFF0303FF, 0x3030303};
+        if (bc_printbigchar(numb, x, y, fg, bg) == -1) {
+            return 1;
+        }
+        break;
+    }
+
     default:
         return 1;
         break;

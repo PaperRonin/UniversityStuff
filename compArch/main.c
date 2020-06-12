@@ -1,7 +1,7 @@
 #include "main.h"
 
 
-    byte *mem = sc_memoryInit(MaxMemory);
+    byte *mem;
 
 void sigHandler(int sigN) {
     if (sigN == SIGINT)
@@ -39,7 +39,7 @@ int handleKey(byte *mem) {
     case KEY_r:
 				sc_regSet(FlagT, 0);
 
-				rk_mytermrergtime(0, 0, 0, 0, 0);
+				rk_mytermregime(0, 0, 0, 0, 0);
 
 				signal(SIGALRM, inst_counter);
 
@@ -49,7 +49,7 @@ int handleKey(byte *mem) {
 				nval.it_value.tv_usec = 0;
 
 				setitimer(ITIMER_REAL, &nval, &oval);
-        int tFlagVal
+        int tFlagVal;
 				while(1) {
 					sc_regGet(FlagT, tFlagVal);
 					if (outputFlags.selectedSlot > MaxMemory || tFlagVal == 1) {
@@ -58,7 +58,7 @@ int handleKey(byte *mem) {
 					}
 					signal(SIGALRM, inst_counter);
 
-					enum keys pressedKey;
+					int pressedKey;
 					rk_readkey(&pressedKey);
 					if (pressedKey == KEY_i) {
 						alarm(0);
@@ -112,11 +112,7 @@ int main(int argc, char const *argv[]) {
     }
     sc_regInit();
 
-    editor.selectedDigit = 3;
-    for (int i = 3; i > 0; --i) {
-        editor.digits[i] = 0;
-    }
-
+mem = sc_memoryInit(MaxMemory);
     outputFlags.selectedSlot = 1;
     draw(mem);
     raise(SIGUSR1);

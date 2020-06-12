@@ -66,43 +66,43 @@ void print_flags() {
 		printf("V");
     }
 	else {
-		mt_setbgcolor(green);
+		mt_setbgcolor(cl_green);
 		printf("V");
-		mt_setbgcolor(def);
+		mt_setbgcolor(cl_default);
 	}
 	printf(" ");
 	if(flagsValue[1] == 0) {
 		printf("O");
 	}
 	else {
-		mt_setbgcolor(green);
+		mt_setbgcolor(cl_green);
 		printf("O");
-		mt_setbgcolor(def);
+		mt_setbgcolor(cl_default);
 	}
 	printf(" ");
 	if(flagsValue[2] == 0)
 		printf("M");
 	else {
-		mt_setbgcolor(green);
+		mt_setbgcolor(cl_green);
 		printf("M");
-		mt_setbgcolor(def);
+		mt_setbgcolor(cl_default);
 	}
 	printf(" ");
 	if(flagsValue[3] == 0) {
 		printf("T");
 	}
 	else {
-		mt_setbgcolor(green);
+		mt_setbgcolor(cl_green);
 		printf("T");
-		mt_setbgcolor(def);
+		mt_setbgcolor(cl_default);
 	}
 	printf(" ");
 	if(flagsValue[4] == 0)
 		printf("E");
 	else {
-		mt_setbgcolor(green);
+		mt_setbgcolor(cl_green);
 		printf("E");
-		mt_setbgcolor(def);
+		mt_setbgcolor(cl_default);
 	}
 }
 
@@ -249,7 +249,7 @@ void frame_draw() {
     mt_gotoXY(24, 1);
     printf("Input\\Output:\n\n");
 
-    for(int h = 0; h < BUF_SIZE && buffer[h].in_out != 0; h++) {
+    for(int h = 0; h < BUFFER_SIZE && buffer[h].in_out != 0; h++) {
 		if (buffer[h].in_out == 1) {
 			printf(">> ");
 		}

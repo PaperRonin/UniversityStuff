@@ -32,8 +32,9 @@ void CU(byte *mem) {
 				else {
 					outputFlags.selectedSlot++;
 				}
-
-				if (value[3] == 0) {
+				  int flagsValue;
+					sc_regGet(FlagT, &flagsValue):
+				if (flagsValue == 0) {
 					rk_mytermregime(0, 0, 0, 0, 0);
 					setitimer(ITIMER_REAL, &nval, &oval);
 				}

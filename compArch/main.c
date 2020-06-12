@@ -51,7 +51,7 @@ int handleKey(byte *mem) {
 				setitimer(ITIMER_REAL, &nval, &oval);
         int tFlagVal;
 				while(1) {
-					sc_regGet(FlagT, tFlagVal);
+					sc_regGet(FlagT, &tFlagVal);
 					if (outputFlags.selectedSlot > MaxMemory || tFlagVal == 1) {
 						alarm(0);
 						break;

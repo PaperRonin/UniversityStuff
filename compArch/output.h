@@ -13,7 +13,7 @@ void print_memory(unsigned short *sc_memory);
 
 void print_flags();
 
-void print_accumulator(int numb);
+void print_accumulator();
 
 void print_ins_counter();
 

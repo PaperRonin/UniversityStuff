@@ -1,4 +1,4 @@
-#include "commands.h"
+#include "main.h"
 
 byte *this_mem;
 

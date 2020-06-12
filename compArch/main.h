@@ -1,12 +1,3 @@
-struct OFlags {
-    int selectedSlot;
-    int key;
-};
-
-struct OFlags outputFlags;
-
-///////////////////////
-
 #include "BigChars.h"
 #include "myReadkey.h"
 #include "mySimpleComputer.h"
@@ -33,6 +24,13 @@ enum Commands {
 	HALT,
 	SUBC = 0x66
 };
+
+struct OFlags {
+    int selectedSlot;
+    int key;
+};
+
+struct OFlags outputFlags;
 
 int accumulator;
 struct termios termios_default;

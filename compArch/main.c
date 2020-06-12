@@ -3,20 +3,13 @@
 
     byte *mem;
 
-void sigHandler(int sigN) {
-    if (sigN == SIGINT)
-        printf("received SIGINT\n"); // FIXME
-    if (sigN == SIGUSR1)
-        printf("restart\n"); // FIXME
-}
-
 void inst_counter() {
 	  CU(mem);
     draw(mem);
 }
 
 void _reset() {
-mem = sc_memoryInit(MaxMemory);
+  mem = sc_memoryInit(MaxMemory);
 	sc_regInit();
 	outputFlags.selectedSlot = 0;
 	sc_regSet(FlagT, 1);
@@ -45,7 +38,7 @@ int handleKey(byte *mem) {
     file_name[sl - 1] = '\0';
     check = sc_memoryLoad(mem, file_name);
     if(check != -1) {
-      printf("Успешно.\n\n");
+      printf("Успешно.\n");
     }
         break;
     case KEY_s:
@@ -55,7 +48,7 @@ int handleKey(byte *mem) {
     file_name[sl - 1] = '\0';
     check = sc_memorySave(mem,file_name);
     if (check != -1) {
-      printf("Успешно.\n\n");
+      printf("Успешно.\n");
     }
         break;
     case KEY_r:
@@ -93,54 +86,85 @@ int handleKey(byte *mem) {
 
         break;
     case KEY_t:
+    inst_counter();
         break;
     case KEY_i:
+    alarm(0);
+    signal(SIGUSR1, _reset);
+    raise (SIGUSR1);
         break;
     case KEY_q:
         return 1;
     case KEY_f5:
-
+    printf("Введите значение акуммулятора: ");
+    int newAccumVal;
+    scanf("%x", &newAccumVal);
+    while(newAccumVal > 0xffff || newAccumVal < -0xffff) {
+      printf("Ошибка. Введите значение акуммулятора: ");
+      scanf("%x", &newAccumVal);
+    }
+    accumulator = newAccumVal;
+    draw(mem);
         break;
     case KEY_f6:
-
+    printf("Введите новый индекс: ");
+    int newIndexVal;
+    scanf("%d", &newIndexVal);
+    while(newIndexVal >= MaxMemory || newIndexVal < 0) {;
+      printf("Ошибка. Введите новый индекс: ");
+      scanf("%d", &newIndexVal);
+    }
+    outputFlags.selectedSlot = newIndexVal;
+    draw(mem);
         break;
     case KEY_up:
         outputFlags.selectedSlot -= outputFlags.selectedSlot > 10 ? 10 : 0;
+        draw(mem);
         break;
     case KEY_down:
         outputFlags.selectedSlot += outputFlags.selectedSlot < 91 ? 10 : 0;
+        draw(mem);
         break;
     case KEY_left:
         outputFlags.selectedSlot -= outputFlags.selectedSlot > 1 ? 1 : 0;
+        draw(mem);
         break;
     case KEY_right:
         outputFlags.selectedSlot += outputFlags.selectedSlot < 100 ? 1 : 0;
+        draw(mem);
         break;
     case KEY_enter:
+    int temp = 0, temp1, temp2;
+    printf("Ввежите признак команды: \n");
+    scanf("%1d", &temp);
+    if (temp == 1) {
+      printf("Введите команду и операнд: \n");
+      scanf("%2x%2x", &temp1, &temp2);
+      if (sc_commandEncode(temp1, temp2, &temp) == 1) {
+        sc_memorySet(mem, outputFlags.selectedSlot, temp);
+      }
+    }else if (temp == 0) {
+      printf("Введите значение: \n");
+      scanf("%4d", &temp2);
 
+			temp2 = temp2 > 0xFFFF ? 0xFFFF : temp2;
+
+      sc_memorySet(mem, outputFlags.selectedSlot, temp2);
+    }
+    draw(mem);
         break;
     }
     return 0;
 }
 
 int main(int argc, char const *argv[]) {
-    if (signal(SIGINT, sigHandler) == SIG_ERR) {
-        printf("\ncan't catch SIGINT\n");
-        return -1;
-    }
-    if (signal(SIGUSR1, sigHandler) == SIG_ERR) {
-        printf("\ncan't catch SIGUSR1\n");
-        return -1;
-    }
     sc_regInit();
 
-mem = sc_memoryInit(MaxMemory);
+    mem = sc_memoryInit(MaxMemory);
     outputFlags.selectedSlot = 1;
+    sc_regSet(FlagT, 1);
     draw(mem);
-    raise(SIGUSR1);
-    raise(SIGINT);
     while (1) {
-        draw(mem);
         rk_readkey(&outputFlags.key);
         if (handleKey(mem) == 1) {
             break;

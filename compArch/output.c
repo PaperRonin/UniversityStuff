@@ -134,8 +134,8 @@ void print_memory(unsigned short *sc_memory) {
         if (i == outputFlags.selectedSlot - 1) {
             mt_setfgcolor(cl_default);
             mt_setbgcolor(cl_default);
-            printf(" ");
         }
+        printf(" ");
     }
 }
 
@@ -143,7 +143,7 @@ void print_accumulator() {
 
     mt_gotoXY(77, 2);
 
-    printf("%.4x ", accumulator);
+    printf("%.4x", accumulator);
 
 }
 
@@ -151,7 +151,7 @@ void print_ins_counter() {
 
     mt_gotoXY(77, 5);
 
-        printf("+%.4d ", outputFlags.selectedSlot);
+        printf("+%.4d ", outputFlags.selectedSlot-1);
 
 }
 

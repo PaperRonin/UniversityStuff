@@ -16,6 +16,7 @@ void _reset() {
 	buff_clear();
 	accumulator = 0;
   draw(mem);
+  	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_default);
 }
 
 void buff_clear() {
@@ -171,5 +172,6 @@ int main(int argc, char const *argv[]) {
             break;
         }
     }
+    	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_default);
     return 0;
 }

@@ -163,11 +163,9 @@ void print_operation(unsigned short *sc_memory) {
     sc_memoryGet(sc_memory, outputFlags.selectedSlot, &value);
     int cmd = 0;
     int operand = 0;
-    if (!sc_commandDecode(value, &cmd, &operand)) {
-        printf("+%.2x:%.2d", cmd, operand);
-    } else {
-        printf("+00:00");
-    }
+    sc_commandDecode(value, &cmd, &operand)
+    printf("+%.2x:%.2d", cmd, operand);
+
 }
 
 void frame_draw() {

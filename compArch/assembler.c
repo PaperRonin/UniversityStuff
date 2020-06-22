@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef unsigned short byte;
+
+
 char str[100];
-int arr[100];
+byte arr[100];
 
 char sti(char *str, int *num);
 int lex(int i);
@@ -48,7 +51,7 @@ int main(int argc, const char *argv[])  {
 
 		fwrite(arr, sizeof(int), 100, f);
 		printf("Трансляция успешно завершена.\n");
-		
+
 		fclose(f);
 	}
 	return 0;
@@ -120,7 +123,7 @@ int lex(int i) {
 	}
 
 	tok = strtok(NULL, " ");
-	
+
 	if(tok[0] == '+') {
 		check = sti(tok + 1, &op);
 	}else if (tok[0] == '-') {
@@ -128,7 +131,7 @@ int lex(int i) {
 		op = - op;
 	}else
 		check = sti(tok, &op);
-	
+
 	if(check == 's') {
 		printf("Ошибка операнда\n");
 		return -1;
@@ -137,14 +140,14 @@ int lex(int i) {
 		printf("Ошибка операнда\n");
 		return -1;
 	}
-		
+
 	arr[i] = (com << 7) | op;
-	
+
 	tok = strtok(NULL, " ");
 	if (tok != NULL && tok[0] != ';') {
 		printf("Ошибка комментария\n");
 		return -1;
 	}
-	
+
 	return 0;
 }

@@ -11,10 +11,11 @@ void inst_counter() {
 void _reset() {
   mem = sc_memoryInit(MaxMemory);
 	sc_regInit();
-	outputFlags.selectedSlot = 0;
+	outputFlags.selectedSlot = 1;
 	sc_regSet(FlagT, 1);
 	buff_clear();
 	accumulator = 0;
+  draw(mem);
 }
 
 void buff_clear() {
@@ -25,7 +26,7 @@ void buff_clear() {
 	}
 }
 
-int handleKey(byte *mem) {
+int handleKey() {
 
   int check = 0;
 	char file_name[50];
@@ -134,8 +135,8 @@ int handleKey(byte *mem) {
         draw(mem);
         break;
     case KEY_enter:
-    int temp = 0, temp1, temp2;
     printf("Ввежите признак команды: \n");
+    int temp, temp1, temp2;
     scanf("%1d", &temp);
     if (temp == 1) {
       printf("Введите команду и операнд: \n");
@@ -166,7 +167,7 @@ int main(int argc, char const *argv[]) {
     draw(mem);
     while (1) {
         rk_readkey(&outputFlags.key);
-        if (handleKey(mem) == 1) {
+        if (handleKey() == 1) {
             break;
         }
     }

@@ -244,7 +244,7 @@ void frame_draw() {
 
     printf("F6 - instructionCounter");
 
-    mt_gotoXY(24, 1);
+    mt_gotoXY(1, 24);
     printf("Input\\Output:\n\n");
 
     for(int h = 0; h < BUFFER_SIZE && buffer[h].in_out != 0; h++) {

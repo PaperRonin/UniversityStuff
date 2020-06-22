@@ -172,6 +172,6 @@ int main(int argc, char const *argv[]) {
             break;
         }
     }
-    	tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_default);
+    rk_mytermrestore();
     return 0;
 }

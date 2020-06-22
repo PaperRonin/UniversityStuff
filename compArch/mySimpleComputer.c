@@ -50,7 +50,7 @@ int sc_memoryLoad(byte *mem, char *filename) {
     save = fopen(filename, "rb");
     if (save == NULL)
         return 1;
-    res = fread(mem, sizeof(byte) * MaxMemory, 1, save);
+    res = fread(mem+1, sizeof(byte) * (MaxMemory-1), 1, save);
     for (i = 0; i < MaxMemory; ++i)
         mem[i] &= 0x7FFF;
     fclose(save);

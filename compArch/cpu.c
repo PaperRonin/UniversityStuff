@@ -14,7 +14,8 @@ void CU(byte *mem) {
 	int decodedVariable, decodedCommand;
 	if (sc_commandDecode(tempVariable, &decodedCommand, &decodedVariable) == -1)
 		sc_regSet(FlagT, 1);
-	else
+	else{
+		decodedVariable++;
 		switch (decodedCommand) {
 			case READ:
 				alarm(0);
@@ -108,6 +109,7 @@ void CU(byte *mem) {
 				}
 				break;
 		}
+	}
 }
 
 int ALU(int command, int operand,byte *mem) {

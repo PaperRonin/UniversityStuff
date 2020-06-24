@@ -34,10 +34,10 @@ void selectedMem_draw(int val) {
     char strval[10];
 
     if (val < 0) {
-      sprintf(strval, "%04d", val);
+        sprintf(strval, "%04d", val);
         bc_convertandprintbigchar('-', 2, 14, cl_default, cl_black);
     } else {
-      sprintf(strval, "%04x", val);
+        sprintf(strval, "%04x", val);
         bc_convertandprintbigchar('+', 2, 14, cl_default, cl_black);
     }
 
@@ -62,48 +62,45 @@ void print_flags() {
     sc_regGet(FlagT, &flagsValue[3]);
     sc_regGet(FlagE, &flagsValue[4]);
 
-    if(flagsValue[0] == 0) {
-		printf("V");
+    if (flagsValue[0] == 0) {
+        printf("V");
+    } else {
+        mt_setbgcolor(cl_green);
+        printf("V");
+        mt_setbgcolor(cl_default);
     }
-	else {
-		mt_setbgcolor(cl_green);
-		printf("V");
-		mt_setbgcolor(cl_default);
-	}
-	printf(" ");
-	if(flagsValue[1] == 0) {
-		printf("O");
-	}
-	else {
-		mt_setbgcolor(cl_green);
-		printf("O");
-		mt_setbgcolor(cl_default);
-	}
-	printf(" ");
-	if(flagsValue[2] == 0)
-		printf("M");
-	else {
-		mt_setbgcolor(cl_green);
-		printf("M");
-		mt_setbgcolor(cl_default);
-	}
-	printf(" ");
-	if(flagsValue[3] == 0) {
-		printf("T");
-	}
-	else {
-		mt_setbgcolor(cl_green);
-		printf("T");
-		mt_setbgcolor(cl_default);
-	}
-	printf(" ");
-	if(flagsValue[4] == 0)
-		printf("E");
-	else {
-		mt_setbgcolor(cl_green);
-		printf("E");
-		mt_setbgcolor(cl_default);
-	}
+    printf(" ");
+    if (flagsValue[1] == 0) {
+        printf("O");
+    } else {
+        mt_setbgcolor(cl_green);
+        printf("O");
+        mt_setbgcolor(cl_default);
+    }
+    printf(" ");
+    if (flagsValue[2] == 0)
+        printf("M");
+    else {
+        mt_setbgcolor(cl_green);
+        printf("M");
+        mt_setbgcolor(cl_default);
+    }
+    printf(" ");
+    if (flagsValue[3] == 0) {
+        printf("T");
+    } else {
+        mt_setbgcolor(cl_green);
+        printf("T");
+        mt_setbgcolor(cl_default);
+    }
+    printf(" ");
+    if (flagsValue[4] == 0)
+        printf("E");
+    else {
+        mt_setbgcolor(cl_green);
+        printf("E");
+        mt_setbgcolor(cl_default);
+    }
 }
 
 void print_memory(unsigned short *sc_memory) {
@@ -122,13 +119,13 @@ void print_memory(unsigned short *sc_memory) {
         if (i == outputFlags.selectedSlot - 1) {
             mt_setfgcolor(cl_black);
             mt_setbgcolor(cl_light_blue);
-          }
+        }
 
         sc_memoryGet(sc_memory, i + 1, &val);
         if (val < 0) {
-        printf("%.4d", val);
+            printf("%.4d", val);
         } else {
-        printf("+%.4x", val);
+            printf("+%.4x", val);
         }
 
         if (i == outputFlags.selectedSlot - 1) {
@@ -144,15 +141,13 @@ void print_accumulator() {
     mt_gotoXY(77, 2);
 
     printf("%.4x", accumulator);
-
 }
 
 void print_ins_counter() {
 
     mt_gotoXY(77, 5);
 
-        printf("+%.4d ", outputFlags.selectedSlot-1);
-
+    printf("+%.4d ", outputFlags.selectedSlot - 1);
 }
 
 void print_operation(unsigned short *sc_memory) {
@@ -165,7 +160,6 @@ void print_operation(unsigned short *sc_memory) {
     int operand = 0;
     sc_commandDecode(value, &cmd, &operand);
     printf("+%.2x:%.2d", cmd, operand);
-
 }
 
 void frame_draw() {
@@ -245,16 +239,14 @@ void frame_draw() {
     printf("F6 - instructionCounter");
 
     mt_gotoXY(1, 24);
-    printf("Input\\Output:\n\n");
+    printf("Input\\Output:\n");
 
-    for(int h = 0; h < BUFFER_SIZE && buffer[h].in_out != 0; h++) {
-		if (buffer[h].in_out == 1) {
-			printf(">> ");
-		}
-		else {
-			printf("<< ");
-		}
-		printf("%d\n", buffer[h].value);
-	}
-
+    for (int h = 0; h < BUFFER_SIZE && buffer[h].in_out != 0; h++) {
+        if (buffer[h].in_out == 1) {
+            printf(">> ");
+        } else {
+            printf("<< ");
+        }
+        printf("%d\n", buffer[h].value);
+    }
 }

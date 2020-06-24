@@ -113,8 +113,8 @@ int lex(int i) {
 		com = 0x42;
 	else if (strcmp(tok, "HALT") == 0)
 		com = 0x43;
-	else if (strcmp(tok, "SUBC") == 0)
-		com = 0X66;
+	else if (strcmp(tok, "OR") == 0)
+		com = 0X53;
 	else if (strcmp(tok, "=") == 0)
 		com = 0;
 	else {

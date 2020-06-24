@@ -22,7 +22,7 @@ enum Commands {
 	JNEG,
 	JZ,
 	HALT,
-	SUBC = 0x66
+	OR = 0x53
 };
 
 struct OFlags {

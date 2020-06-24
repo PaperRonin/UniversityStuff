@@ -8,18 +8,19 @@ void CU(byte *mem) {
 
     int tempMemory;
     int tempVariable;
-    if (sc_memoryGet(mem, outputFlags.selectedSlot, &tempVariable)) {
+    if (sc_memoryGet(mem, outputFlags.selectedSlot, &tempVariable) == -1) {
         sc_regSet(FlagT, 1);
     }
     int decodedVariable, decodedCommand;
-    if (sc_commandDecode(tempVariable, &decodedCommand, &decodedVariable))
+    if (sc_commandDecode(tempVariable, &decodedCommand, &decodedVariable) == -1)
         sc_regSet(FlagT, 1);
     else {
         decodedVariable++;
         switch (decodedCommand) {
         case READ:
             alarm(0);
-            rk_mytermregime(1, 0, 0, 1, 0);
+            // tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_default);
+            rk_mytermregime(1, 0, 0, 0, 0);
             printf(">> ");
             scanf("%d", &tempMemory);
             buffer[buff_counter].value = tempMemory;
@@ -28,7 +29,7 @@ void CU(byte *mem) {
             if (tempMemory > 0xffff || tempMemory < -0xffff) {
                 sc_regSet(FlagV, 1);
                 sc_regSet(FlagT, 1);
-            } else if (sc_memorySet(mem, decodedVariable, tempMemory))
+            } else if (sc_memorySet(mem, decodedVariable, tempMemory) == -1)
                 sc_regSet(FlagT, 1);
             else {
                 outputFlags.selectedSlot++;
@@ -41,7 +42,7 @@ void CU(byte *mem) {
             }
             break;
         case WRITE:
-            if (sc_memoryGet(mem, decodedVariable, &tempMemory)) {
+            if (sc_memoryGet(mem, decodedVariable, &tempMemory) == -1) {
                 sc_regSet(FlagT, 1);
             } else {
                 buffer[buff_counter].value = tempMemory;
@@ -51,7 +52,7 @@ void CU(byte *mem) {
             }
             break;
         case LOAD:
-            if (sc_memoryGet(mem, decodedVariable, &tempMemory)) {
+            if (sc_memoryGet(mem, decodedVariable, &tempMemory) == -1) {
                 sc_regSet(FlagT, 1);
             } else {
                 accumulator = tempMemory;
@@ -59,7 +60,7 @@ void CU(byte *mem) {
             }
             break;
         case STORE:
-            if (sc_memorySet(mem, decodedVariable, accumulator)) {
+            if (sc_memorySet(mem, decodedVariable, accumulator) == -1) {
                 sc_regSet(FlagT, 1);
             } else {
                 outputFlags.selectedSlot++;
@@ -99,7 +100,7 @@ void CU(byte *mem) {
             sc_regSet(FlagT, 1);
             break;
         default:
-            if (ALU(decodedCommand, decodedVariable, mem)) {
+            if (ALU(decodedCommand, decodedVariable, mem) == -1) {
                 sc_regSet(FlagT, 1);
             } else {
                 outputFlags.selectedSlot++;
@@ -114,7 +115,7 @@ int ALU(int command, int operand, byte *mem) {
     int tmp1;
     switch (command) {
     case ADD:
-        if (sc_memoryGet(mem, operand, &tempMemory)) {
+        if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
             sc_regSet(FlagT, 1);
             return -1;
         } else {
@@ -122,7 +123,7 @@ int ALU(int command, int operand, byte *mem) {
         }
         break;
     case SUBB:
-        if (sc_memoryGet(mem, operand, &tempMemory)) {
+        if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
             sc_regSet(FlagT, 1);
             return -1;
         } else {
@@ -130,7 +131,7 @@ int ALU(int command, int operand, byte *mem) {
         }
         break;
     case DIVIDE:
-        if (sc_memoryGet(mem, operand, &tempMemory)) {
+        if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
             sc_regSet(FlagT, 1);
             return -1;
         } else if (tempMemory == 0) {
@@ -142,7 +143,7 @@ int ALU(int command, int operand, byte *mem) {
         }
         break;
     case MUL:
-        if (sc_memoryGet(mem, operand, &tempMemory)) {
+        if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
             sc_regSet(FlagT, 1);
             return -1;
         } else {
@@ -150,7 +151,7 @@ int ALU(int command, int operand, byte *mem) {
         }
         break;
     case OR:
-        if (sc_memoryGet(mem, operand, &tempMemory)) {
+        if (sc_memoryGet(mem, operand, &tempMemory) == -1) {
             sc_regSet(FlagT, 1);
             return -1;
         }
